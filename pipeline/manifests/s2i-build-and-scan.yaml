@@ -5,7 +5,7 @@ metadata:
   namespace: northpole-pipelines
 spec:
   params:
-    - default: 'ttl.sh/giftrack:1h'
+    - default: 'ttl.sh/gifttrack:1h'
       name: IMAGE_NAME
       type: string
     - default: 'http://gogs.gogs.svc.cluster.local:3000/developer/santa.git'
@@ -89,5 +89,20 @@ spec:
       taskRef:
         kind: Task
         name: rhacs-image-check
+    - name: deploy-gifttrack-v2
+      params:
+        - name: SCRIPT
+          value: oc apply -k manifests/northpole/gifttrack-v2
+        - name: VERSION
+          value: latest
+      taskRef:
+        kind: ClusterTask
+        name: openshift-client
+      workspaces:
+        - name: manifest-dir
+          workspace: workspace
+      runAfter:
+        - rhacs-image-check
   workspaces:
     - name: workspace
+
