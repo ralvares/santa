@@ -20,7 +20,7 @@ spec:
         app: gifttrack-v2
     spec:
       containers:
-        - image: ttl.sh/giftrack:1h
+        - image: ttl.sh/gifttrack:1h
           command: ["java"]
           args:
             [
