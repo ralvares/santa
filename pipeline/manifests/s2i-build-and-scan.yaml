@@ -41,6 +41,8 @@ spec:
           value: ''
         - name: PATH_CONTEXT
           value: src/gifttrack
+        - name: MAVEN_CLEAR_REPO
+          value: 'true'
       runAfter:
         - fetch-repository
       taskRef:
