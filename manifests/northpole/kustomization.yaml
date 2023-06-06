@@ -11,3 +11,4 @@ resources:
 - santadispatch
 - wrapmaster
 - santablog
+- rbac.yaml
