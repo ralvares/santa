@@ -1,0 +1,54 @@
+# Deployment named "presentpro"
+# Listens on :8080
+# Has SSH keys mounted
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: presentpro
+  namespace: northpole
+  labels:
+    app: presentpro
+    exposed: "true"
+    app.kubernetes.io/part-of: northpole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: presentpro
+  template:
+    metadata:
+      labels:
+        app: presentpro
+    spec:
+      containers:
+        - image: quay.io/ralvares/santa:presentpro
+          command: ["/bin/entrypoint"]
+          args:
+            [
+              "-listen",
+              ":8080",
+            ]
+          imagePullPolicy: Always
+          name: presentpro
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+---
+# Service named "presentpro-service"
+# Listens on :8080
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: presentpro
+  name: presentpro-service
+  namespace: northpole
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+      name: http
+  selector:
+    app: presentpro
+  type: ClusterIP

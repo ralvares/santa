@@ -1,0 +1,61 @@
+# Deployment named "joyrider"
+# Listens on :8080
+# Has SSH keys mounted
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    app.openshift.io/connects-to: deliveryelf,festiveroute
+  name: joyrider
+  namespace: northpole
+  labels:
+    app: joyrider
+    exposed: "true"
+    app.kubernetes.io/part-of: northpole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: joyrider
+  template:
+    metadata:
+      labels:
+        app: joyrider
+    spec:
+      containers:
+        - image: quay.io/ralvares/santa:joyrider
+          command: ["/bin/entrypoint"]
+          args:
+            [
+              "-listen",
+              ":8080",
+              "-connect",
+              "$(DELIVERYELF_ADDR):$(DELIVERYELF_PORT),$(FESTIVEROUTE_ADDR):$(FESTIVEROUTE_PORT)",
+            ]
+          imagePullPolicy: Always
+          name: joyrider
+          envFrom:
+            - configMapRef:
+                name: joyrider-endpoint-config
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+---
+# Service named "joyrider-service"
+# Listens on :8080
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: joyrider
+  name: joyrider-service
+  namespace: northpole
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+      name: http
+  selector:
+    app: joyrider
+  type: ClusterIP

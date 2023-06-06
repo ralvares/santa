@@ -1,0 +1,54 @@
+# Deployment named "giftguardian"
+# Listens on :8080
+# Has SSH keys mounted
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: giftguardian
+  namespace: northpole
+  labels:
+    app: giftguardian
+    exposed: "true"
+    app.kubernetes.io/part-of: northpole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: giftguardian
+  template:
+    metadata:
+      labels:
+        app: giftguardian
+    spec:
+      containers:
+        - image: quay.io/ralvares/santa:giftguardian
+          command: ["/bin/entrypoint"]
+          args:
+            [
+              "-listen",
+              ":8080",
+            ]
+          imagePullPolicy: Always
+          name: giftguardian
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+---
+# Service named "giftguardian-service"
+# Listens on :8080
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: giftguardian
+  name: giftguardian-service
+  namespace: northpole
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+      name: http
+  selector:
+    app: giftguardian
+  type: ClusterIP

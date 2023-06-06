@@ -1,0 +1,61 @@
+# Deployment named "festiveroute"
+# Listens on :8080
+# Has SSH keys mounted
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    app.openshift.io/connects-to: giftguardian
+  name: festiveroute
+  namespace: northpole
+  labels:
+    app: festiveroute
+    exposed: "true"
+    app.kubernetes.io/part-of: northpole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: festiveroute
+  template:
+    metadata:
+      labels:
+        app: festiveroute
+    spec:
+      containers:
+        - image: quay.io/ralvares/santa:festiveroute
+          command: ["/bin/entrypoint"]
+          args:
+            [
+              "-listen",
+              ":8080",
+              "-connect",
+              "$(GIFTGUARDIAN_ADDR):$(GIFTGUARDIAN_PORT)",
+            ]
+          imagePullPolicy: Always
+          name: festiveroute
+          envFrom:
+            - configMapRef:
+                name: festiveroute-endpoint-config
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+---
+# Service named "festiveroute-service"
+# Listens on :8080
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: festiveroute
+  name: festiveroute-service
+  namespace: northpole
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+      name: http
+  selector:
+    app: festiveroute
+  type: ClusterIP

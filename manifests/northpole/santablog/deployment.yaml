@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: santablog
+  namespace: northpole 
+  labels:
+    app: santablog
+    exposed: "true"
+    app.kubernetes.io/part-of: northpole 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: santablog
+  template:
+    metadata:
+      labels:
+        app: santablog
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - image: quay.io/ralvares/santa:blog
+          command: ["/bin/entrypoint"]
+          args:
+            [
+              "-listen",
+              ":8080",
+            ]
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          securityContext:
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - all
+          imagePullPolicy: Always
+          name: santablog
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          env:
+            - name: exploit
+              value: "true"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: santablog
+  name: santablog-service
+  namespace: northpole 
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+      name: http
+  selector:
+    app: santablog
+  type: ClusterIP

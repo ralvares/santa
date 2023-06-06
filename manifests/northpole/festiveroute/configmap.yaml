@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  GIFTGUARDIAN_ADDR: giftguardian-service
+  GIFTGUARDIAN_PORT: "8080"
+kind: ConfigMap
+metadata:
+  name: festiveroute-endpoint-config
+  namespace: northpole

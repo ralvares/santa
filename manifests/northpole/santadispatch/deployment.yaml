@@ -1,0 +1,61 @@
+# Deployment named "santadispatch"
+# Listens on :8080
+# Has SSH keys mounted
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    app.openshift.io/connects-to: presentpro,joyrider
+  name: santadispatch
+  namespace: northpole
+  labels:
+    app: santadispatch
+    exposed: "true"
+    app.kubernetes.io/part-of: northpole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: santadispatch
+  template:
+    metadata:
+      labels:
+        app: santadispatch
+    spec:
+      containers:
+        - image: quay.io/ralvares/santa:santadispatch
+          command: ["/bin/entrypoint"]
+          args:
+            [
+              "-listen",
+              ":8080",
+              "-connect",
+              "$(PRESENTPRO_ADDR):$(PRESENTPRO_PORT),$(JOYRIDER_ADDR):$(JOYRIDER_PORT)",
+            ]
+          imagePullPolicy: Always
+          name: santadispatch
+          envFrom:
+            - configMapRef:
+                name: santadispatch-endpoint-config
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+---
+# Service named "santadispatch-service"
+# Listens on :8080
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: santadispatch
+  name: santadispatch-service
+  namespace: northpole
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      targetPort: 8080
+      name: http
+  selector:
+    app: santadispatch
+  type: ClusterIP
