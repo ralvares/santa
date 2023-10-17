@@ -1,0 +1,338 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  labels:
+    network-policy-buildtime-generator.stackrox.io/generated: "true"
+  name: deliveryelf-netpol
+  namespace: northpole
+spec:
+  egress:
+  - ports:
+    - port: 8080
+      protocol: TCP
+    to:
+    - podSelector:
+        matchLabels:
+          app: wrapmaster
+  - ports:
+    - port: 53
+      protocol: UDP
+    to:
+    - namespaceSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: joyrider
+    ports:
+    - port: 8080
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app: deliveryelf
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  labels:
+    network-policy-buildtime-generator.stackrox.io/generated: "true"
+  name: festiveroute-netpol
+  namespace: northpole
+spec:
+  egress:
+  - ports:
+    - port: 8080
+      protocol: TCP
+    to:
+    - podSelector:
+        matchLabels:
+          app: giftguardian
+  - ports:
+    - port: 53
+      protocol: UDP
+    to:
+    - namespaceSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: joyrider
+    ports:
+    - port: 8080
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app: festiveroute
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  labels:
+    network-policy-buildtime-generator.stackrox.io/generated: "true"
+  name: giftguardian-netpol
+  namespace: northpole
+spec:
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: festiveroute
+    ports:
+    - port: 8080
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app: giftguardian
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  labels:
+    network-policy-buildtime-generator.stackrox.io/generated: "true"
+  name: gifttrack-netpol
+  namespace: northpole
+spec:
+  egress:
+  - ports:
+    - port: 8080
+      protocol: TCP
+    to:
+    - podSelector:
+        matchLabels:
+          app: santadispatch
+  - ports:
+    - port: 53
+      protocol: UDP
+    to:
+    - namespaceSelector: {}
+  podSelector:
+    matchLabels:
+      app: gifttrack
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  labels:
+    network-policy-buildtime-generator.stackrox.io/generated: "true"
+  name: gifttrack-v2-netpol
+  namespace: northpole
+spec:
+  egress:
+  - ports:
+    - port: 8080
+      protocol: TCP
+    to:
+    - podSelector:
+        matchLabels:
+          app: santadispatch
+  - ports:
+    - port: 53
+      protocol: UDP
+    to:
+    - namespaceSelector: {}
+  podSelector:
+    matchLabels:
+      app: gifttrack-v2
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  labels:
+    network-policy-buildtime-generator.stackrox.io/generated: "true"
+  name: joyrider-netpol
+  namespace: northpole
+spec:
+  egress:
+  - ports:
+    - port: 8080
+      protocol: TCP
+    to:
+    - podSelector:
+        matchLabels:
+          app: deliveryelf
+  - ports:
+    - port: 8080
+      protocol: TCP
+    to:
+    - podSelector:
+        matchLabels:
+          app: festiveroute
+  - ports:
+    - port: 53
+      protocol: UDP
+    to:
+    - namespaceSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: santadispatch
+    ports:
+    - port: 8080
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app: joyrider
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  labels:
+    network-policy-buildtime-generator.stackrox.io/generated: "true"
+  name: presentpro-netpol
+  namespace: northpole
+spec:
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: santadispatch
+    ports:
+    - port: 8080
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app: presentpro
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  labels:
+    network-policy-buildtime-generator.stackrox.io/generated: "true"
+  name: santablog-netpol
+  namespace: northpole
+spec:
+  podSelector:
+    matchLabels:
+      app: santablog
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  labels:
+    network-policy-buildtime-generator.stackrox.io/generated: "true"
+  name: santadispatch-netpol
+  namespace: northpole
+spec:
+  egress:
+  - ports:
+    - port: 8080
+      protocol: TCP
+    to:
+    - podSelector:
+        matchLabels:
+          app: joyrider
+  - ports:
+    - port: 8080
+      protocol: TCP
+    to:
+    - podSelector:
+        matchLabels:
+          app: presentpro
+  - ports:
+    - port: 53
+      protocol: UDP
+    to:
+    - namespaceSelector: {}
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: gifttrack
+    ports:
+    - port: 8080
+      protocol: TCP
+  - from:
+    - podSelector:
+        matchLabels:
+          app: gifttrack-v2
+    ports:
+    - port: 8080
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app: santadispatch
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  labels:
+    network-policy-buildtime-generator.stackrox.io/generated: "true"
+  name: wrapmaster-netpol
+  namespace: northpole
+spec:
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: deliveryelf
+    ports:
+    - port: 8080
+      protocol: TCP
+  podSelector:
+    matchLabels:
+      app: wrapmaster
+  policyTypes:
+  - Ingress
+  - Egress
+
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  labels:
+    network-policy-buildtime-generator.stackrox.io/generated: "true"
+  name: default-deny-in-namespace-northpole
+  namespace: northpole
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
