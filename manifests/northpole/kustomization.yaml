@@ -11,3 +11,4 @@ resources:
 - wrapmaster
 - santablog
 - rbac.yaml
+- netpol.yaml
