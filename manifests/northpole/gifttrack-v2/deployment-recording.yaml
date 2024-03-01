@@ -10,7 +10,7 @@ metadata:
     exposed: "true"
     seccomp: recordme
     app.kubernetes.io/part-of: northpole
-    spo.x-k8s.io/enable-recording: true
+    spo.x-k8s.io/enable-recording: "true"
 spec:
   replicas: 1
   selector:
