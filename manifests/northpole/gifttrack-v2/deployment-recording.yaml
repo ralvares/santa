@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    app.openshift.io/connects-to: santadispatch
+  name: gifttrack-v2
+  namespace: northpole
+  labels:
+    app: gifttrack-v2
+    exposed: "true"
+    seccomp: recordme
+    app.kubernetes.io/part-of: northpole
+    spo.x-k8s.io/enable-recording: true
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gifttrack-v2
+  template:
+    metadata:
+      labels:
+        app: gifttrack-v2
+    spec:
+      containers:
+        - image: ttl.sh/gifttrack:1h
+          command: ["java"]
+          args:
+            [
+              "-jar",
+	      "-Dlisten=8080",
+              "-Dconnect=$(SANTADISPATCH_ADDR):$(SANTADISPATCH_PORT)",
+              "/deployments/gifttrack-1.0-jar-with-dependencies.jar",
+            ]
+          imagePullPolicy: Always
+          name: gifttrack-v2
+          envFrom:
+            - configMapRef:
+                name: gifttrack-endpoint-config
+          ports:
+            - containerPort: 8080
+              protocol: TCP

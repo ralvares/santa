@@ -16,7 +16,7 @@ spec:
         matchLabels:
           app: wrapmaster
   - ports:
-    - port: 53
+    - port: 5353
       protocol: UDP
     to:
     - namespaceSelector: {}
@@ -54,7 +54,7 @@ spec:
         matchLabels:
           app: giftguardian
   - ports:
-    - port: 53
+    - port: 5353
       protocol: UDP
     to:
     - namespaceSelector: {}
@@ -117,7 +117,7 @@ spec:
         matchLabels:
           app: santadispatch
   - ports:
-    - port: 53
+    - port: 5353
       protocol: UDP
     to:
     - namespaceSelector: {}
@@ -147,7 +147,7 @@ spec:
         matchLabels:
           app: santadispatch
   - ports:
-    - port: 53
+    - port: 5353
       protocol: UDP
     to:
     - namespaceSelector: {}
@@ -184,7 +184,7 @@ spec:
         matchLabels:
           app: festiveroute
   - ports:
-    - port: 53
+    - port: 5353
       protocol: UDP
     to:
     - namespaceSelector: {}
@@ -271,7 +271,7 @@ spec:
         matchLabels:
           app: presentpro
   - ports:
-    - port: 53
+    - port: 5353
       protocol: UDP
     to:
     - namespaceSelector: {}
@@ -336,3 +336,4 @@ spec:
   policyTypes:
   - Ingress
   - Egress
+

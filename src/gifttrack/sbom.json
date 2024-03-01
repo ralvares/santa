@@ -1,0 +1,118 @@
+{
+  "$schema": "http://cyclonedx.org/schema/bom-1.4.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.4",
+  "serialNumber": "urn:uuid:af1670d0-11b8-4dd9-897b-10514e6adb37",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2023-08-07T15:54:12+02:00",
+    "tools": [
+      {
+        "vendor": "anchore",
+        "name": "syft",
+        "version": "0.86.1"
+      }
+    ],
+    "component": {
+      "bom-ref": "af63bd4c8601b7f1",
+      "type": "file",
+      "name": "."
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "pkg:maven/org.apache.logging.log4j/log4j-api@2.14.1?package-id=c4b6702e4359e352",
+      "type": "library",
+      "group": "org.apache.logging.log4j",
+      "name": "log4j-api",
+      "version": "2.14.1",
+      "cpe": "cpe:2.3:a:apache:log4j-api:2.14.1:*:*:*:*:*:*:*",
+      "purl": "pkg:maven/org.apache.logging.log4j/log4j-api@2.14.1",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "java-pom-cataloger"
+        },
+        {
+          "name": "syft:package:language",
+          "value": "java"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "JavaMetadata"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "java-archive"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:apache:log4j_api:2.14.1:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:apache:log4j:2.14.1:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/pom.xml"
+        },
+        {
+          "name": "syft:metadata:-:artifactID",
+          "value": "log4j-api"
+        },
+        {
+          "name": "syft:metadata:-:groupID",
+          "value": "org.apache.logging.log4j"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1?package-id=df1bf7f4d948091e",
+      "type": "library",
+      "group": "org.apache.logging.log4j",
+      "name": "log4j-core",
+      "version": "2.14.1",
+      "cpe": "cpe:2.3:a:apache:log4j-core:2.14.1:*:*:*:*:*:*:*",
+      "purl": "pkg:maven/org.apache.logging.log4j/log4j-core@2.14.1",
+      "properties": [
+        {
+          "name": "syft:package:foundBy",
+          "value": "java-pom-cataloger"
+        },
+        {
+          "name": "syft:package:language",
+          "value": "java"
+        },
+        {
+          "name": "syft:package:metadataType",
+          "value": "JavaMetadata"
+        },
+        {
+          "name": "syft:package:type",
+          "value": "java-archive"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:apache:log4j_core:2.14.1:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:cpe23",
+          "value": "cpe:2.3:a:apache:log4j:2.14.1:*:*:*:*:*:*:*"
+        },
+        {
+          "name": "syft:location:0:path",
+          "value": "/pom.xml"
+        },
+        {
+          "name": "syft:metadata:-:artifactID",
+          "value": "log4j-core"
+        },
+        {
+          "name": "syft:metadata:-:groupID",
+          "value": "org.apache.logging.log4j"
+        }
+      ]
+    }
+  ]
+}

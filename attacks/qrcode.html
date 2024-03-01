@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Style for the container holding the iframe and QR code image */
+        .iframe-container {
+            display: flex;
+        }
+
+        /* Style for the iframe on the right side */
+        .iframe-container iframe {
+            width: 50%; /* Adjust the width as needed */
+            height: 100vh; /* Adjust the height as needed */
+            border: none;
+        }
+
+        /* Style for the QR code image on the left side */
+        .iframe-container .qr-code {
+            width: 50%; /* Adjust the width as needed */
+            background-image: url('file:///qrcode.png'); /* Replace with the actual local file path */
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="iframe-container">
+        <!-- Replace the URL below with your desired web page URL -->
+        <iframe src="https://central-stackrox.apps.ocp.ralvares.com/main/risk?s[Namespace]=northpole"></iframe>
+        <div class="qr-code"></div>
+    </div>
+</body>
+</html>
+
